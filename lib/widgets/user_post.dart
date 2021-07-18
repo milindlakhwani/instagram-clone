@@ -1,0 +1,134 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:instagram_ui_clone/globals/myColors.dart';
+import 'package:instagram_ui_clone/globals/myFonts.dart';
+import 'package:instagram_ui_clone/globals/mySpaces.dart';
+import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+
+import '../models/post.dart';
+
+class UserPost extends StatefulWidget {
+  final Post post;
+
+  const UserPost(this.post);
+
+  @override
+  _UserPostState createState() => _UserPostState();
+}
+
+class _UserPostState extends State<UserPost> {
+  bool isFavourite = false;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(15),
+          child: Row(
+            children: [
+              CircleAvatar(
+                child: ClipRRect(
+                  child: Image.asset(widget.post.profileUrl),
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                backgroundColor: Colors.blue,
+              ),
+              MySpaces.hGapInBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.post.name,
+                    style: MyFonts.medium.size(16),
+                  ),
+                  MySpaces.vSmallestGapInBetween,
+                  Text(widget.post.location),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Image.asset(
+          widget.post.postUrl,
+          fit: BoxFit.contain,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      iconSize: SizeConfig.horizontalBlockSize * 8,
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        setState(() {
+                          isFavourite = !isFavourite;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: kBlack,
+                            content: Text(
+                              "You have ${isFavourite ? "liked" : "disliked"} the post",
+                              style: MyFonts.light.setColor(kWhite).size(15),
+                            ),
+                          ),
+                        );
+                      },
+                      icon: isFavourite
+                          ? Icon(Icons.favorite_rounded, color: Colors.red)
+                          : Icon(Icons.favorite_outline),
+                    ),
+                    MySpaces.hGapInBetween,
+                    Icon(
+                      FontAwesomeIcons.comment,
+                      size: SizeConfig.horizontalBlockSize * 8,
+                    ),
+                    MySpaces.hSmallGapInBetween,
+                    Icon(
+                      FontAwesomeIcons.paperPlane,
+                      size: SizeConfig.horizontalBlockSize * 7,
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 15,
+                    backgroundImage:
+                        AssetImage(widget.post.likedby[0].imageUrl),
+                  ),
+                  MySpaces.hGapInBetween,
+                  Text(
+                      "Liked by ${widget.post.likedby[0].userName} and ${widget.post.likedby.length - 1} others"),
+                ],
+              ),
+              MySpaces.vSmallestGapInBetween,
+              RichText(
+                text: TextSpan(
+                    text: widget.post.name + " ",
+                    style: MyFonts.medium.size(SizeConfig.textScaleFactor * 17),
+                    children: [
+                      TextSpan(
+                          text: widget.post.caption,
+                          style: MyFonts.light
+                              .size(SizeConfig.textScaleFactor * 15))
+                    ]),
+              ),
+              MySpaces.vGapInBetween,
+              Text(
+                widget.post.date,
+                style: MyFonts.thin.setColor(kGrey),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
