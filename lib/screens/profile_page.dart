@@ -3,6 +3,7 @@ import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+import 'package:instagram_ui_clone/widgets/profile_picture.dart';
 import 'package:instagram_ui_clone/widgets/story.dart';
 import 'package:instagram_ui_clone/models/user.dart';
 import 'package:instagram_ui_clone/providers/DUMMY_DATA.dart';
@@ -24,10 +25,7 @@ class ProfilePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Story(
-                        imageUrl: data.imageUrl,
-                        radii: SizeConfig.horizontalBlockSize * 12,
-                      ),
+                      ProfilePicture(),
                       // Container(
                       //   padding: const EdgeInsets.all(5),
                       //   decoration: BoxDecoration(

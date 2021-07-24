@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
@@ -13,16 +17,18 @@ import 'package:instagram_ui_clone/screens/profile_page.dart';
 import 'package:instagram_ui_clone/screens/search.dart';
 import 'package:instagram_ui_clone/widgets/dm_button.dart';
 import 'package:instagram_ui_clone/widgets/instagram_logo.dart';
-import '../providers/DUMMY_DATA.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "home-page";
+  final _auth = FirebaseAuth.instance;
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  File _imageFile;
+  final picker = ImagePicker();
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Feed(),
@@ -42,12 +48,43 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future pickImage() async {
+    // Open gallery to select the image
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    // run the build method again to show a loading spinner at the place of this widget
+    setState(() {
+      _imageFile = File(pickedFile.path);
+    });
+
+    // Upload the image to firebase storage with the name as UserId
+    final firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('images/${widget._auth.currentUser.uid}');
+    final uploadTask = firebaseStorageRef.putFile(_imageFile);
+
+    // the response that firebase returns us in uploadTask is the URL of the image which we can show in our app
+    uploadTask.then((taskSnapshot) {
+      taskSnapshot.ref.getDownloadURL().then((value) async {
+        try {
+          await widget._auth.currentUser.updatePhotoURL(value);
+        } catch (error) {
+          print(error);
+        }
+        // Stop the loading once fetching and setting it done
+      });
+    });
+  }
+
   static List<Widget> _appBars = <Widget>[
     AppBar(
       backgroundColor: appbarColor,
-      leading: Icon(
-        Icons.camera_alt_outlined,
-        size: SizeConfig.horizontalBlockSize * 7,
+      leading: IconButton(
+        onPressed: null,
+        icon: Icon(
+          Icons.camera_alt_outlined,
+          size: SizeConfig.horizontalBlockSize * 7,
+        ),
       ),
       title: Center(child: Logo(SizeConfig.horizontalBlockSize * 7)),
       centerTitle: true,
@@ -135,7 +172,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            DummyData().currentUser.userName,
+            FirebaseAuth.instance.currentUser.displayName,
             style: MyFonts.light.size(20),
           ),
           MySpaces.hGapInBetween,
