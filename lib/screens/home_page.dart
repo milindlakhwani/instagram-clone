@@ -108,14 +108,27 @@ class _HomePageState extends State<HomePage> {
         MySpaces.hGapInBetween,
       ],
     ),
-    PreferredSize(
-      preferredSize: DummyData().tab.preferredSize,
-      child: Card(
-        elevation: 26.0,
-        color: appbarColor,
-        child: DummyData().tab,
+    AppBar(
+      backgroundColor: appbarColor,
+      leading: Icon(
+        Icons.camera_alt_outlined,
+        size: SizeConfig.horizontalBlockSize * 7,
       ),
+      title: Center(child: Logo(SizeConfig.horizontalBlockSize * 7)),
+      centerTitle: true,
+      actions: [
+        DmButton(),
+        MySpaces.hGapInBetween,
+      ],
     ),
+    // PreferredSize(
+    //   preferredSize: DummyData().tab.preferredSize,
+    //   child: Card(
+    //     elevation: 26.0,
+    //     color: appbarColor,
+    //     child: DummyData().tab,
+    //   ),
+    // ),
     AppBar(
       backgroundColor: appbarColor,
       title: Row(
