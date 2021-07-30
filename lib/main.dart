@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_ui_clone/providers/authentication.dart';
+import 'package:instagram_ui_clone/providers/posts.dart';
 import 'package:instagram_ui_clone/screens/add_posts.dart';
 import 'package:instagram_ui_clone/screens/chat.dart';
 import 'package:instagram_ui_clone/screens/home_page.dart';
@@ -19,8 +20,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => Authentication(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Authentication(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => Posts(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Instagram',
         theme: ThemeData.dark(),

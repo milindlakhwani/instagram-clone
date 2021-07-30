@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:instagram_ui_clone/widgets/dm_widget.dart';
 // import 'package:instagram_ui_clone/screens/search.dart';
 
-import '../models/post.dart';
 import '../models/story.dart';
 
 class DummyData {
@@ -26,152 +25,152 @@ class DummyData {
     );
   }
 
-  final List<Post> posts = [
-    Post(
-      name: "test_name",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      date: "September 19",
-      likedby: List.generate(
-          10,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-    ),
-    Post(
-      name: "test_name_1",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      date: "September 19",
-      likedby: List.generate(
-          15,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-    ),
-    Post(
-      name: "test_name_2",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      date: "September 19",
-      likedby: List.generate(
-          20,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-    ),
-    Post(
-      name: "test_name_3",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      date: "September 19",
-      likedby: List.generate(
-          5,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-    ),
-    Post(
-      name: "test_name_4",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      date: "September 19",
-      likedby: List.generate(
-          3,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-    ),
-    Post(
-      name: "test_name_5",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          13,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-    Post(
-      name: "test_name_6",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          30,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-    Post(
-      name: "test_name_7",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          45,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-    Post(
-      name: "test_name_8",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          18,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-    Post(
-      name: "test_name_9",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          21,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-    Post(
-      name: "test_name_10",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          36,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-    Post(
-      name: "test_name_11",
-      caption: "A sample picture",
-      location: "Tokyo, Japan",
-      postUrl: "assets/images/img.png",
-      profileUrl: "assets/images/img.png",
-      likedby: List.generate(
-          50,
-          (index) => User(
-              userName: "user_num_$index", imageUrl: "assets/images/img.png")),
-      date: "September 19",
-    ),
-  ];
+  // final List<Post> posts = [
+  //   Post(
+  //     name: "test_name",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     date: "September 19",
+  //     likedby: List.generate(
+  //         10,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //   ),
+  //   Post(
+  //     name: "test_name_1",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     date: "September 19",
+  //     likedby: List.generate(
+  //         15,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //   ),
+  //   Post(
+  //     name: "test_name_2",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     date: "September 19",
+  //     likedby: List.generate(
+  //         20,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //   ),
+  //   Post(
+  //     name: "test_name_3",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     date: "September 19",
+  //     likedby: List.generate(
+  //         5,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //   ),
+  //   Post(
+  //     name: "test_name_4",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     date: "September 19",
+  //     likedby: List.generate(
+  //         3,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //   ),
+  //   Post(
+  //     name: "test_name_5",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         13,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  //   Post(
+  //     name: "test_name_6",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         30,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  //   Post(
+  //     name: "test_name_7",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         45,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  //   Post(
+  //     name: "test_name_8",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         18,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  //   Post(
+  //     name: "test_name_9",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         21,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  //   Post(
+  //     name: "test_name_10",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         36,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  //   Post(
+  //     name: "test_name_11",
+  //     caption: "A sample picture",
+  //     location: "Tokyo, Japan",
+  //     postUrl: "assets/images/img.png",
+  //     profileUrl: "assets/images/img.png",
+  //     likedby: List.generate(
+  //         50,
+  //         (index) => User(
+  //             userName: "user_num_$index", imageUrl: "assets/images/img.png")),
+  //     date: "September 19",
+  //   ),
+  // ];
 
   // final List<User> users = [
   //   User("Person 1", imageUrl)

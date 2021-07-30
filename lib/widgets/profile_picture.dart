@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +17,9 @@ class _ProfilePictureState extends State<ProfilePicture> {
   final picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
   var isLoading = false;
+  final DocumentReference _db = FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser.uid);
 
   // fucntion to set the user profile picture
   Future pickImage() async {
@@ -39,6 +43,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
       taskSnapshot.ref.getDownloadURL().then((value) async {
         try {
           await _auth.currentUser.updatePhotoURL(value);
+          await _db.update({'imageUrl': value});
         } catch (error) {
           print(error);
         }

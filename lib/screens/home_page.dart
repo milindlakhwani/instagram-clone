@@ -10,6 +10,7 @@ import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+import 'package:instagram_ui_clone/providers/posts.dart';
 // import 'package:instagram_ui_clone/screens/chat.dart';
 // import 'package:instagram_ui_clone/models/user.dart';
 import 'package:instagram_ui_clone/screens/feed.dart';
@@ -18,6 +19,7 @@ import 'package:instagram_ui_clone/screens/profile_page.dart';
 import 'package:instagram_ui_clone/screens/search.dart';
 import 'package:instagram_ui_clone/widgets/dm_button.dart';
 import 'package:instagram_ui_clone/widgets/instagram_logo.dart';
+import 'package:provider/provider.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import '../functions/upload_image.dart' as imageUpload;
 
@@ -30,6 +32,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    Provider.of<Posts>(context, listen: false).fetchAndSetPosts();
+    super.initState();
+  }
 
   static List<Widget> _widgetOptions = <Widget>[
     Feed(),
@@ -54,7 +62,6 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: appbarColor,
       leading: IconButton(
         onPressed: () => imageUpload.pickImage(ImageSource.camera),
-        // Provider.of<Authentication>(context, listen: false).pickImage,
         icon: Icon(
           Icons.camera_alt_outlined,
           size: SizeConfig.horizontalBlockSize * 7,

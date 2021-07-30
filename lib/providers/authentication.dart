@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,10 @@ class Authentication with ChangeNotifier {
           email: email, password: password);
       if (user != null) {
         await _auth.currentUser.updateDisplayName(name);
+        final DocumentReference _db = FirebaseFirestore.instance
+            .collection('users')
+            .doc(_auth.currentUser.uid);
+        await _db.set({'user_name': name});
       }
     } catch (e) {
       throw e;

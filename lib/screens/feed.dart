@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_ui_clone/providers/posts.dart';
+import 'package:provider/provider.dart';
 import '../providers/DUMMY_DATA.dart';
 import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
@@ -46,9 +48,18 @@ class Feed extends StatelessWidget {
             height: 2,
             color: kWhite.withOpacity(0.5),
           ),
-          ...data.posts.map((post) {
-            return UserPost(post);
-          }).toList(),
+          Consumer<Posts>(builder: (ctx, posts, _) {
+            return Column(
+              children: [
+                ...posts.posts.map((post) => UserPost(post)).toList(),
+              ],
+            );
+          }),
+          // ...data.posts.map((post) {
+          //   return UserPost(post);
+          // }).toList(),
+          // StreamBuilder(stream: ,builder: null ,),
+          // FutureBuilder(future:  , builder: null)
         ],
       ),
     );

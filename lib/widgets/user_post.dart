@@ -4,6 +4,7 @@ import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+import 'package:intl/intl.dart';
 
 import '../models/post.dart';
 
@@ -18,6 +19,7 @@ class UserPost extends StatefulWidget {
 
 class _UserPostState extends State<UserPost> {
   bool isFavourite = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,11 +30,9 @@ class _UserPostState extends State<UserPost> {
           child: Row(
             children: [
               CircleAvatar(
-                child: ClipRRect(
-                  child: Image.asset(widget.post.profileUrl),
-                  borderRadius: BorderRadius.circular(1000),
-                ),
-                backgroundColor: Colors.blue,
+                radius: SizeConfig.horizontalBlockSize * 6,
+                backgroundImage: NetworkImage(widget.post.profileUrl ??
+                    "https://i2.wp.com/wilkinsonschool.org/wp-content/uploads/2018/10/user-default-grey.png"),
               ),
               MySpaces.hGapInBetween,
               Column(
@@ -49,7 +49,7 @@ class _UserPostState extends State<UserPost> {
             ],
           ),
         ),
-        Image.asset(
+        Image.network(
           widget.post.postUrl,
           fit: BoxFit.contain,
         ),
@@ -96,22 +96,23 @@ class _UserPostState extends State<UserPost> {
                   ],
                 ),
               ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 15,
-                    backgroundImage:
-                        AssetImage(widget.post.likedby[0].imageUrl),
-                  ),
-                  MySpaces.hGapInBetween,
-                  Text(
-                      "Liked by ${widget.post.likedby[0].userName} and ${widget.post.likedby.length - 1} others"),
-                ],
-              ),
-              MySpaces.vSmallestGapInBetween,
+              // Row(
+              //   children: [
+              //     CircleAvatar(
+              //       radius: 15,
+              //       backgroundImage:
+              //           AssetImage(widget.post.likedby[0].imageUrl),
+              //     ),
+              //     MySpaces.hGapInBetween,
+              //     Text(
+              //         "Liked by ${widget.post.likedby[0].userName} and ${widget.post.likedby.length - 1} others"),
+              //   ],
+              // ),
+              // MySpaces.vSmallestGapInBetween,
               RichText(
                 text: TextSpan(
                     text: widget.post.name + " ",
+                    // text: widget.post.name + " ",
                     style: MyFonts.medium.size(SizeConfig.textScaleFactor * 17),
                     children: [
                       TextSpan(
@@ -122,9 +123,12 @@ class _UserPostState extends State<UserPost> {
               ),
               MySpaces.vGapInBetween,
               Text(
-                widget.post.date,
+                DateFormat('MMMM dd , yy').format(widget.post.date),
+                // widget.post.date,
+                // DateFormatr(widget.post.date),
                 style: MyFonts.thin.setColor(kGrey),
               ),
+              MySpaces.vGapInBetween,
             ],
           ),
         )
