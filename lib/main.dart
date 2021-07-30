@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_ui_clone/providers/authentication.dart';
+import 'package:instagram_ui_clone/screens/add_posts.dart';
 import 'package:instagram_ui_clone/screens/chat.dart';
 import 'package:instagram_ui_clone/screens/home_page.dart';
 import 'package:instagram_ui_clone/screens/signup.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
           SignUp.routeName: (ctx) => SignUp(),
           HomePage.routeName: (ctx) => HomePage(),
           Chat.routeName: (ctx) => Chat(),
+          AddPosts.routeName: (ctx) => AddPosts(),
         },
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_ui_clone/globals/myColors.dart';
@@ -18,7 +19,7 @@ class Chat extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              DummyData().currentUser.userName,
+              FirebaseAuth.instance.currentUser.displayName,
               style: MyFonts.light.size(20),
             ),
             MySpaces.hGapInBetween,

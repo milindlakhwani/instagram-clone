@@ -1,9 +1,10 @@
-import 'dart:io';
+// import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
@@ -17,19 +18,19 @@ import 'package:instagram_ui_clone/screens/profile_page.dart';
 import 'package:instagram_ui_clone/screens/search.dart';
 import 'package:instagram_ui_clone/widgets/dm_button.dart';
 import 'package:instagram_ui_clone/widgets/instagram_logo.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import '../functions/upload_image.dart' as imageUpload;
 
 class HomePage extends StatefulWidget {
   static const routeName = "home-page";
-  final _auth = FirebaseAuth.instance;
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  File _imageFile;
-  final picker = ImagePicker();
   int _selectedIndex = 0;
+
   static List<Widget> _widgetOptions = <Widget>[
     Feed(),
     Search(),
@@ -48,39 +49,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future pickImage() async {
-    // Open gallery to select the image
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    // run the build method again to show a loading spinner at the place of this widget
-    setState(() {
-      _imageFile = File(pickedFile.path);
-    });
-
-    // Upload the image to firebase storage with the name as UserId
-    final firebaseStorageRef = FirebaseStorage.instance
-        .ref()
-        .child('images/${widget._auth.currentUser.uid}');
-    final uploadTask = firebaseStorageRef.putFile(_imageFile);
-
-    // the response that firebase returns us in uploadTask is the URL of the image which we can show in our app
-    uploadTask.then((taskSnapshot) {
-      taskSnapshot.ref.getDownloadURL().then((value) async {
-        try {
-          await widget._auth.currentUser.updatePhotoURL(value);
-        } catch (error) {
-          print(error);
-        }
-        // Stop the loading once fetching and setting it done
-      });
-    });
-  }
-
   static List<Widget> _appBars = <Widget>[
     AppBar(
       backgroundColor: appbarColor,
       leading: IconButton(
-        onPressed: null,
+        onPressed: () => imageUpload.pickImage(ImageSource.camera),
+        // Provider.of<Authentication>(context, listen: false).pickImage,
         icon: Icon(
           Icons.camera_alt_outlined,
           size: SizeConfig.horizontalBlockSize * 7,
@@ -186,6 +160,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    imageUpload.init(context);
     return Scaffold(
       backgroundColor: kBlack,
       appBar: _appBars[_selectedIndex],
@@ -223,7 +198,10 @@ class _HomePageState extends State<HomePage> {
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.plusSquare),
+            icon: GestureDetector(
+              child: Icon(FontAwesomeIcons.plusSquare),
+              onTap: () => imageUpload.pickImage(ImageSource.gallery),
+            ),
             label: "",
           ),
           BottomNavigationBarItem(

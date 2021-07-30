@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import '../globals/sizeConfig.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../globals/sizeConfig.dart';
+import 'package:flutter/material.dart';
 
 class ProfilePicture extends StatefulWidget {
   @override
@@ -13,9 +13,9 @@ class ProfilePicture extends StatefulWidget {
 
 class _ProfilePictureState extends State<ProfilePicture> {
   File _imageFile;
+  final picker = ImagePicker();
   final _auth = FirebaseAuth.instance;
   var isLoading = false;
-  final picker = ImagePicker();
 
   // fucntion to set the user profile picture
   Future pickImage() async {
@@ -29,8 +29,9 @@ class _ProfilePictureState extends State<ProfilePicture> {
     });
 
     // Upload the image to firebase storage with the name as UserId
-    final firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('images/${_auth.currentUser.uid}');
+    final firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('images/${_auth.currentUser.uid}/profile_pic');
     final uploadTask = firebaseStorageRef.putFile(_imageFile);
 
     // the response that firebase returns us in uploadTask is the URL of the image which we can show in our app
