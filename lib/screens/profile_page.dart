@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart' as db;
 import 'package:flutter/material.dart';
 import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+import 'package:instagram_ui_clone/screens/signup.dart';
 import 'package:instagram_ui_clone/widgets/profile_picture.dart';
 import 'package:instagram_ui_clone/widgets/story.dart';
 import 'package:instagram_ui_clone/models/user.dart';
@@ -83,7 +85,11 @@ class ProfilePage extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        db.FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            SignUp.routeName, (route) => false);
+                      },
                       child: Text(
                         "Edit Profile",
                         style: MyFonts.light.setColor(kWhite).size(17),

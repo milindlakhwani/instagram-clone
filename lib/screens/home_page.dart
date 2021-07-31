@@ -17,6 +17,7 @@ import 'package:instagram_ui_clone/screens/feed.dart';
 import 'package:instagram_ui_clone/screens/likes.dart';
 import 'package:instagram_ui_clone/screens/profile_page.dart';
 import 'package:instagram_ui_clone/screens/search.dart';
+import 'package:instagram_ui_clone/screens/add_post.dart';
 import 'package:instagram_ui_clone/widgets/dm_button.dart';
 import 'package:instagram_ui_clone/widgets/instagram_logo.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    Provider.of<Posts>(context, listen: false).fetchAndSetPosts();
+    Provider.of<Posts>(context, listen: false).oneTimeFetch();
     super.initState();
   }
 
@@ -57,11 +58,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  static List<Widget> _appBars = <Widget>[
+  List<Widget> _appBars = <Widget>[
     AppBar(
       backgroundColor: appbarColor,
       leading: IconButton(
-        onPressed: () => imageUpload.pickImage(ImageSource.camera),
+        onPressed: () => imageUpload.navigate(),
         icon: Icon(
           Icons.camera_alt_outlined,
           size: SizeConfig.horizontalBlockSize * 7,
@@ -207,7 +208,13 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: GestureDetector(
               child: Icon(FontAwesomeIcons.plusSquare),
-              onTap: () => imageUpload.pickImage(ImageSource.gallery),
+              // onTap: () => Navigator.of(context)
+              //     .pushNamed(AddPost.routeName, arguments: 'Gallery'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddPost(ImageSource.gallery)),
+              ),
             ),
             label: "",
           ),

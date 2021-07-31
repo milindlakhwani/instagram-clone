@@ -4,12 +4,13 @@ import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
-import 'package:instagram_ui_clone/providers/DUMMY_DATA.dart';
+import 'package:instagram_ui_clone/providers/posts.dart';
+import 'package:provider/provider.dart';
 
 class Search extends StatelessWidget {
-  final data = DummyData();
   @override
   Widget build(BuildContext context) {
+    final data = Provider.of<Posts>(context).posts;
     return SingleChildScrollView(
       child: Container(
           color: appbarColor,
@@ -53,9 +54,11 @@ class Search extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
-                itemCount: data.searchImages.length,
-                itemBuilder: (context, index) =>
-                    Image.asset(data.searchImages[index]),
+                itemCount: data.length,
+                itemBuilder: (context, index) => Image.network(
+                  data[index].postUrl,
+                  fit: BoxFit.cover,
+                ),
                 staggeredTileBuilder: (index) => StaggeredTile.count(
                     (index % 10 == 0) ? 2 : 1, (index % 10 == 0) ? 2 : 1),
                 mainAxisSpacing: 8.0,
