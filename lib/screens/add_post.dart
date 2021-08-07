@@ -92,9 +92,11 @@ class _AddPostState extends State<AddPost> {
         'imageUrl': imageUrl,
         'caption': _caption,
         'location': _location,
-        'addedBy': FirebaseAuth.instance.currentUser.displayName,
-        'profileUrl': FirebaseAuth.instance.currentUser.photoURL,
+        // 'addedBy': FirebaseAuth.instance.currentUser.displayName,
+        // 'profileUrl': FirebaseAuth.instance.currentUser.photoURL,
         'timeStamp': DateTime.now(),
+        'addedBy': FirebaseFirestore.instance
+            .doc('/users/${FirebaseAuth.instance.currentUser.uid}'),
       });
     } catch (error) {
       print(error);

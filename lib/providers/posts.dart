@@ -27,13 +27,11 @@ class Posts with ChangeNotifier {
       _posts.clear();
       response.docs.forEach((doc) {
         _posts.add(Post(
-          postUrl: doc['imageUrl'],
-          location: doc['location'],
-          caption: doc['caption'],
-          date: DateTime.parse(doc['timeStamp'].toDate().toString()),
-          name: doc['addedBy'],
-          profileUrl: doc['profileUrl'],
-        ));
+            postUrl: doc['imageUrl'],
+            location: doc['location'],
+            caption: doc['caption'],
+            date: DateTime.parse(doc['timeStamp'].toDate().toString()),
+            addedBy: doc['addedBy']));
       });
     } catch (error) {
       throw error;
