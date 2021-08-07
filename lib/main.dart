@@ -2,9 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_ui_clone/providers/authentication.dart';
 import 'package:instagram_ui_clone/providers/posts.dart';
+import 'package:instagram_ui_clone/screens/activity.dart';
 import 'package:instagram_ui_clone/screens/chat.dart';
 import 'package:instagram_ui_clone/screens/home_page.dart';
+import 'package:instagram_ui_clone/screens/profile_page.dart';
+import 'package:instagram_ui_clone/screens/search.dart';
 import 'package:instagram_ui_clone/screens/signup.dart';
+// import 'package:instagram_ui_clone/screens/test.dart';
 // import 'package:instagram_ui_clone/screens/add_post.dart';
 import 'package:provider/provider.dart';
 
@@ -38,9 +42,10 @@ class MyApp extends StatelessWidget {
           LogIn.routeName: (ctx) => LogIn(),
           SignUp.routeName: (ctx) => SignUp(),
           HomePage.routeName: (ctx) => HomePage(),
+          Search.routeName: (ctx) => Search(),
+          Activity.routeName: (ctx) => Activity(),
+          ProfilePage.routeName: (ctx) => ProfilePage(),
           Chat.routeName: (ctx) => Chat(),
-          // AddPosts.routeName: (ctx) => AddPosts(),
-          // AddPost.routeName: (ctx) => AddPost(),
         },
       ),
     );
