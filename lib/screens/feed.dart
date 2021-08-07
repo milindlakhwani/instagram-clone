@@ -55,15 +55,25 @@ class Feed extends StatelessWidget {
             Consumer<Posts>(builder: (ctx, posts, _) {
               return Column(
                 children: [
+                  if (posts.posts.isEmpty)
+                    Column(
+                      children: [
+                        MySpaces.vMediumGapInBetween,
+                        CircularProgressIndicator(),
+                      ],
+                    ),
                   ...posts.posts.map((post) => UserPost(post)).toList(),
                 ],
               );
+              // posts.fetchPosts().then((value) {
+              //   return Column(
+              //     children: [
+              //       ...posts.posts.map((post) => UserPost(post)).toList(),
+              //     ],
+              //   );
+              // });
+              // return Center(child: CircularProgressIndicator());
             }),
-            // ...data.posts.map((post) {
-            //   return UserPost(post);
-            // }).toList(),
-            // StreamBuilder(stream: ,builder: null ,),
-            // FutureBuilder(future:  , builder: null)
           ],
         ),
       ),

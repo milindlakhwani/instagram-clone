@@ -39,7 +39,7 @@ class _WelcomeState extends State<Welcome> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Logo(SizeConfig.textScaleFactor * 55),
+              Logo(SizeConfig.horizontalBlockSize * 15),
               Column(
                 children: [
                   Button(
