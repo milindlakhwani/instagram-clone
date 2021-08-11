@@ -68,8 +68,10 @@ class Bnb extends StatelessWidget {
                     "https://i2.wp.com/wilkinsonschool.org/wp-content/uploads/2018/10/user-default-grey.png"),
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(ProfilePage.routeName);
+                Navigator.of(context).pushReplacementNamed(
+                  ProfilePage.routeName,
+                  arguments: FirebaseAuth.instance.currentUser.uid,
+                );
               },
             ),
           ],
