@@ -22,7 +22,10 @@ class Authentication with ChangeNotifier {
         final DocumentReference _db = FirebaseFirestore.instance
             .collection('users')
             .doc(_auth.currentUser.uid);
-        await _db.set({'user_name': name});
+        await _db.set({
+          'user_name': name,
+          'searchKey': name.substring(0).toUpperCase(),
+        });
       }
     } catch (e) {
       throw e;

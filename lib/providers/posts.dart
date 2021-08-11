@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:instagram_ui_clone/models/post.dart';
 
 class Posts with ChangeNotifier {
-  final _auth = FirebaseAuth.instance;
   final List<Post> _posts = [];
   bool isLoading = false;
 
@@ -22,7 +21,9 @@ class Posts with ChangeNotifier {
     try {
       final response = await FirebaseFirestore.instance
           .collection('posts')
-          .where('addedBy', isNotEqualTo: _auth.currentUser.displayName)
+          .where('addedBy',
+              isNotEqualTo: FirebaseFirestore.instance
+                  .doc('/users/${FirebaseAuth.instance.currentUser.uid}'))
           .get();
       _posts.clear();
       response.docs.forEach((doc) {
