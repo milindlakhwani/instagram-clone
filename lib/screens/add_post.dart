@@ -61,6 +61,7 @@ class _AddPostState extends State<AddPost> {
           // Navigator.of(context).pushNamed(AddPosts.routeName, arguments: value);
           imageUrl = value;
         } catch (error) {
+          Navigator.of(context).pop();
           print(error);
         }
         // Stop the loading once fetching and setting it done
@@ -80,7 +81,7 @@ class _AddPostState extends State<AddPost> {
   String _caption, _location;
   final _formKey = GlobalKey<FormState>();
 
-  void save(String imageUrl) async {
+  Future<void> save(String imageUrl) async {
     _formKey.currentState.save();
     final CollectionReference _db =
         FirebaseFirestore.instance.collection('posts');
@@ -97,20 +98,23 @@ class _AddPostState extends State<AddPost> {
         'timeStamp': DateTime.now(),
         'addedBy': FirebaseFirestore.instance
             .doc('/users/${FirebaseAuth.instance.currentUser.uid}'),
+        'likedBy': [],
       });
+      print("Added Successfully");
     } catch (error) {
-      print(error);
+      print("Emror");
+      // print(error);
     }
 
     setState(() {
-      isLoading = true;
+      isLoading = false;
     });
+    // Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(isLoading);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBlack,

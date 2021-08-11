@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddPost(ImageSource.gallery),
+              builder: (context) => AddPost(ImageSource.camera),
             ),
           ),
           icon: Icon(

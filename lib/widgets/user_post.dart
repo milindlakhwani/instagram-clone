@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:instagram_ui_clone/globals/myColors.dart';
@@ -10,8 +12,6 @@ import '../models/post.dart';
 
 class UserPost extends StatefulWidget {
   final Post post;
-  // final String profileUrl = post.addedBy.id;
-
   const UserPost(this.post);
 
   @override
@@ -19,13 +19,18 @@ class UserPost extends StatefulWidget {
 }
 
 class _UserPostState extends State<UserPost> {
-  bool isFavourite = false;
   String profileUrl;
   String name;
   bool isLoading = true;
+  final _auth = FirebaseAuth.instance;
+  bool isLiked;
+  final CollectionReference _db =
+      FirebaseFirestore.instance.collection('posts');
 
   @override
   void initState() {
+    isLiked = widget.post.likedBy
+        .contains(FirebaseAuth.instance.currentUser.displayName);
     widget.post.addedBy.get().then((response) {
       final data = response.data() as Map<String, dynamic>;
       profileUrl = data['imageUrl'];
@@ -84,24 +89,53 @@ class _UserPostState extends State<UserPost> {
                         children: [
                           IconButton(
                             iconSize: SizeConfig.horizontalBlockSize * 8,
-                            onPressed: () {
+                            onPressed: () async {
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();
-                              setState(() {
-                                isFavourite = !isFavourite;
-                              });
+                              try {
+                                setState(() {
+                                  isLiked = !isLiked;
+                                });
+                                isLiked
+                                    ? await _db.doc(widget.post.docId).update({
+                                        'likedBy': widget.post.likedBy
+                                          ..insert(
+                                              0, _auth.currentUser.displayName)
+                                      })
+                                    : await _db.doc(widget.post.docId).update({
+                                        'likedBy': widget.post.likedBy
+                                          ..remove(
+                                              _auth.currentUser.displayName)
+                                      });
+                              } catch (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: kBlack,
+                                    content: Text(
+                                      "Unable to like the post",
+                                      style: MyFonts.light
+                                          .setColor(kWhite)
+                                          .size(15),
+                                    ),
+                                  ),
+                                );
+                                setState(() {
+                                  isLiked = !isLiked;
+                                });
+                              }
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   backgroundColor: kBlack,
                                   content: Text(
-                                    "You have ${isFavourite ? "liked" : "disliked"} the post",
+                                    "You have ${isLiked ? "liked" : "disliked"} the post",
                                     style:
                                         MyFonts.light.setColor(kWhite).size(15),
                                   ),
                                 ),
                               );
                             },
-                            icon: isFavourite
+                            icon: isLiked
                                 ? Icon(Icons.favorite_rounded,
                                     color: Colors.red)
                                 : Icon(Icons.favorite_outline),
@@ -119,19 +153,15 @@ class _UserPostState extends State<UserPost> {
                         ],
                       ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     CircleAvatar(
-                    //       radius: 15,
-                    //       backgroundImage:
-                    //           AssetImage(widget.post.likedby[0].imageUrl),
-                    //     ),
-                    //     MySpaces.hGapInBetween,
-                    //     Text(
-                    //         "Liked by ${widget.post.likedby[0].userName} and ${widget.post.likedby.length - 1} others"),
-                    //   ],
-                    // ),
-                    // MySpaces.vSmallestGapInBetween,
+                    Row(
+                      children: [
+                        if (widget.post.likedBy.isNotEmpty)
+                          Text((widget.post.likedBy.length == 1)
+                              ? "Liked by ${widget.post.likedBy[0]}"
+                              : "Liked by ${widget.post.likedBy[0]} and ${widget.post.likedBy.length - 1} others"),
+                      ],
+                    ),
+                    MySpaces.vSmallestGapInBetween,
                     RichText(
                       text: TextSpan(
                           text: name + " ",

@@ -27,12 +27,17 @@ class Posts with ChangeNotifier {
           .get();
       _posts.clear();
       response.docs.forEach((doc) {
-        _posts.add(Post(
+        _posts.add(
+          Post(
             postUrl: doc['imageUrl'],
             location: doc['location'],
             caption: doc['caption'],
             date: DateTime.parse(doc['timeStamp'].toDate().toString()),
-            addedBy: doc['addedBy']));
+            addedBy: doc['addedBy'],
+            likedBy: doc['likedBy'],
+            docId: doc.id,
+          ),
+        );
       });
     } catch (error) {
       throw error;
@@ -40,63 +45,3 @@ class Posts with ChangeNotifier {
     notifyListeners();
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Future<void> fetchPosts() async {
-  //   try {
-  //     final response = await FirebaseFirestore.instance
-  //         .collection('posts')
-  //         .where('addedBy', isNotEqualTo: _auth.currentUser.displayName)
-  //         .get();
-  //     _posts.clear();
-  //     response.docs.forEach((doc) {
-  //       _posts.add(Post(
-  //         postUrl: doc['imageUrl'],
-  //         location: doc['location'],
-  //         caption: doc['caption'],
-  //         date: DateTime.parse(doc['timeStamp'].toDate().toString()),
-  //         name: doc['addedBy'],
-  //         profileUrl: doc['profileUrl'],
-  //       ));
-  //     });
-  //   } catch (error) {
-  //     throw error;
-  //   }
-
-  //   // final allPosts = FirebaseFirestore.instance
-  //   //     .collection('posts')
-  //   //     .where('addedBy', isNotEqualTo: _auth.currentUser.displayName);
-  //   // try {
-  //   //   allPosts.get().then((QuerySnapshot querySnapshot) {
-  //   //     querySnapshot.docs.forEach((doc) {
-  //   //       _posts.add(Post(
-  //   //         postUrl: doc['imageUrl'],
-  //   //         location: doc['location'],
-  //   //         caption: doc['caption'],
-  //   //         date: DateTime.parse(doc['timeStamp'].toDate().toString()),
-  //   //         name: doc['addedBy'],
-  //   //         profileUrl: doc['profileUrl'],
-  //   //       ));
-  //   //     });
-  //   //   });
-  //   // } catch (error) {
-  //   //   print(error);
-  //   // }
-  // }
-
-  // Future<void> oneTimeFetch() async {
-  //   await fetchPosts();
-  // }
