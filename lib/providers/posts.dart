@@ -19,8 +19,19 @@ class Posts with ChangeNotifier {
 
   Future<void> fetchAndSetPosts() async {
     try {
+      // final userFollowingData = await FirebaseFirestore.instance
+      //     .collection('users')
+      //     .doc(FirebaseAuth.instance.currentUser.uid)
+      //     .get();
+      // final List<dynamic> followingList = userFollowingData.data()['following'];
+      // print(followingList);
+      // followingList.forEach((element) {
+      //   element = FirebaseFirestore.instance.doc('users/$element/');
+      // });
+
       final response = await FirebaseFirestore.instance
           .collection('posts')
+          // .where('addedBy', whereIn: followingList)
           .where('addedBy',
               isNotEqualTo: FirebaseFirestore.instance
                   .doc('/users/${FirebaseAuth.instance.currentUser.uid}'))

@@ -8,6 +8,7 @@ import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
 import 'package:instagram_ui_clone/providers/posts.dart';
 import 'package:instagram_ui_clone/providers/search_provider.dart';
+import 'package:instagram_ui_clone/screens/profile_page.dart';
 import 'package:instagram_ui_clone/widgets/bnb.dart';
 import 'package:provider/provider.dart';
 
@@ -123,7 +124,7 @@ class _SearchState extends State<Search> {
             FontAwesomeIcons.instagram,
             size: SizeConfig.horizontalBlockSize * 8,
           ),
-          MySpaces.hSmallestGapInBetween,
+          MySpaces.hGapInBetween,
         ],
         // centerTitle: true,
       ),
@@ -131,11 +132,19 @@ class _SearchState extends State<Search> {
           ? SingleChildScrollView(
               child: Column(
                 children: tempSearchStore.map((element) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(element['imageUrl']),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacementNamed(
+                        ProfilePage.routeName,
+                        arguments: element['userId'],
+                      );
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(element['imageUrl']),
+                      ),
+                      title: Text(element['user_name']),
                     ),
-                    title: Text(element['user_name']),
                   );
                 }).toList(),
               ),

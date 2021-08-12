@@ -8,6 +8,10 @@ import '../globals/sizeConfig.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePicture extends StatefulWidget {
+  final String imageUrl;
+
+  const ProfilePicture({this.imageUrl});
+
   @override
   _ProfilePictureState createState() => _ProfilePictureState();
 }
@@ -64,7 +68,9 @@ class _ProfilePictureState extends State<ProfilePicture> {
           : CircleAvatar(
               radius: SizeConfig.horizontalBlockSize * 11,
               backgroundImage: NetworkImage(
-                FirebaseAuth.instance.currentUser.photoURL ??
+                ((widget.imageUrl == null)
+                        ? FirebaseAuth.instance.currentUser.photoURL
+                        : widget.imageUrl) ??
                     "https://i2.wp.com/wilkinsonschool.org/wp-content/uploads/2018/10/user-default-grey.png",
               ),
               // ?? syntax is used to check if a particular value is null and if it is null then do something else
