@@ -141,7 +141,8 @@ class _SearchState extends State<Search> {
                     },
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage(element['imageUrl']),
+                        backgroundImage: NetworkImage(element['imageUrl'] ??
+                            "https://i2.wp.com/wilkinsonschool.org/wp-content/uploads/2018/10/user-default-grey.png"),
                       ),
                       title: Text(element['user_name']),
                     ),

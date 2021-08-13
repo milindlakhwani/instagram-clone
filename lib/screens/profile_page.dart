@@ -68,7 +68,8 @@ class ProfilePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ProfilePicture(
-                              imageUrl: snapshots.item2.data['imageUrl'],
+                              imageUrl: snapshots.item2.data['imageUrl'] ??
+                                  "https://i2.wp.com/wilkinsonschool.org/wp-content/uploads/2018/10/user-default-grey.png",
                             ),
                             MySpaces.hGapInBetween,
                             Expanded(
