@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instagram_ui_clone/globals/myColors.dart';
 import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+import 'package:instagram_ui_clone/screens/add_post.dart';
 import 'package:instagram_ui_clone/screens/signup.dart';
 import 'package:instagram_ui_clone/widgets/bnb.dart';
 // import 'package:instagram_ui_clone/widgets/button.dart';
@@ -127,11 +129,27 @@ class ProfilePage extends StatelessWidget {
                                         .pushNamedAndRemoveUntil(
                                             SignUp.routeName, (route) => false);
                                   },
-                                  child: Text(
-                                    "Logout",
-                                    style:
-                                        MyFonts.light.setColor(kWhite).size(17),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.logout_outlined,
+                                        color: kWhite,
+                                      ),
+                                      MySpaces.hGapInBetween,
+                                      Text(
+                                        "Log Out",
+                                        style: MyFonts.light
+                                            .setColor(kWhite)
+                                            .size(17),
+                                      ),
+                                    ],
                                   ),
+                                  // child: Text(
+                                  //   "Logout",
+                                  //   style:
+                                  //       MyFonts.light.setColor(kWhite).size(17),
+                                  // ),
                                   style: TextButton.styleFrom(
                                     padding:
                                         const EdgeInsets.symmetric(vertical: 7),
@@ -166,12 +184,60 @@ class ProfilePage extends StatelessWidget {
                               .contains(_auth.currentUser.uid) ||
                           currentUser == _auth.currentUser.uid)
                       ? (snapshots.item1.data.docs.length == 0)
-                          ? Center(
-                              child: Text(
-                              "No Posts to show...",
-                              style: MyFonts.light
-                                  .size(SizeConfig.horizontalBlockSize * 5),
-                            ))
+                          ? Container(
+                              height: 200,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 18),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          width: 1,
+                                          color: storyColor,
+                                        ),
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AddPost(ImageSource.gallery),
+                                          ),
+                                        ),
+                                        // Icons.camera_alt_outlined,
+                                        icon: Icon(
+                                          Icons.camera_alt_outlined,
+                                          size: SizeConfig.horizontalBlockSize *
+                                              10,
+                                        ),
+                                        color: kWhite,
+                                        iconSize: 50,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 18),
+                                    child: Text(
+                                      "No Posts Yet",
+                                      style: MyFonts.light.size(25),
+                                    ),
+                                  ),
+                                  Padding(
+                                    // padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.only(bottom: 18),
+                                    child: Text(
+                                      "When you share photos, they will appear on your profile.",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: MyFonts.light.size(15),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
                           : GridView.builder(
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -192,11 +258,66 @@ class ProfilePage extends StatelessWidget {
                               },
                             )
                       : Center(
-                          child: Text(
-                          "Follow this account to see their posts",
-                          style: MyFonts.light
-                              .size(SizeConfig.horizontalBlockSize * 5),
-                        )),
+                          child: Container(
+                            height: 200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 18),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        width: 1,
+                                        color: storyColor,
+                                      ),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddPost(ImageSource.gallery),
+                                        ),
+                                      ),
+                                      // Icons.camera_alt_outlined,
+                                      icon: Icon(
+                                        Icons.lock,
+                                        size:
+                                            SizeConfig.horizontalBlockSize * 10,
+                                      ),
+                                      color: kWhite,
+                                      iconSize: 50,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 18),
+                                  child: Text(
+                                    "This account is private",
+                                    style: MyFonts.light.size(25),
+                                  ),
+                                ),
+                                Padding(
+                                  // padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.only(bottom: 18),
+                                  child: Text(
+                                    "Follow this account to see their photos and videos",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: MyFonts.light.size(15),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // child: Text(
+                          //   "Follow this account to see their posts",
+                          //   style: MyFonts.light
+                          //       .size(SizeConfig.horizontalBlockSize * 5),
+                          // ),
+                        ),
                 ],
               ),
             ),

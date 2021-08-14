@@ -128,6 +128,7 @@ class _SearchState extends State<Search> {
         ],
         // centerTitle: true,
       ),
+      backgroundColor: appbarColor,
       body: isSearching
           ? SingleChildScrollView(
               child: Column(
@@ -201,7 +202,11 @@ class _SearchState extends State<Search> {
                       (Provider.of<Posts>(context, listen: false)
                               .queryList
                               .isEmpty)
-                          ? Text("Follow someone")
+                          ? Text(
+                              "No Posts to show 😔",
+                              style: MyFonts.medium
+                                  .size(SizeConfig.horizontalBlockSize * 4),
+                            )
                           : StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection('posts')
