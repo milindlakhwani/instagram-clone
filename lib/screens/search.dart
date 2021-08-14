@@ -66,7 +66,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<Posts>(context).posts;
+    // final data = Provider.of<Posts>(context).posts;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appbarColor,
@@ -198,21 +198,47 @@ class _SearchState extends State<Search> {
                         ),
                       ),
                       MySpaces.vGapInBetween,
-                      StaggeredGridView.countBuilder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        crossAxisCount: 3,
-                        itemCount: data.length,
-                        itemBuilder: (context, index) => Image.network(
-                          data[index].postUrl,
-                          fit: BoxFit.cover,
-                        ),
-                        staggeredTileBuilder: (index) => StaggeredTile.count(
-                            (index % 10 == 0) ? 2 : 1,
-                            (index % 10 == 0) ? 2 : 1),
-                        mainAxisSpacing: 8.0,
-                        crossAxisSpacing: 8.0,
-                      )
+                      (Provider.of<Posts>(context, listen: false)
+                              .queryList
+                              .isEmpty)
+                          ? Text("Follow someone")
+                          : StreamBuilder(
+                              stream: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .where('addedBy',
+                                      whereIn:
+                                          Provider.of<Posts>(context).queryList)
+                                  .snapshots(),
+                              builder: (context, snapshots) {
+                                if (snapshots.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                }
+                                return StaggeredGridView.countBuilder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  crossAxisCount: 3,
+                                  itemCount: snapshots.data.docs.length,
+                                  itemBuilder: (ctx, index) {
+                                    final data = snapshots.data.docs[index]
+                                        .data() as Map<String, dynamic>;
+                                    return Image.network(
+                                      data['imageUrl'],
+                                      fit: BoxFit.cover,
+                                    );
+                                  },
+                                  // itemBuilder: (context, index) => Image.network(
+                                  //   data[index].postUrl,
+                                  //   fit: BoxFit.cover,
+                                  // ),
+                                  staggeredTileBuilder: (index) =>
+                                      StaggeredTile.count(
+                                          (index % 10 == 0) ? 2 : 1,
+                                          (index % 10 == 0) ? 2 : 1),
+                                  mainAxisSpacing: 8.0,
+                                  crossAxisSpacing: 8.0,
+                                );
+                              })
                     ],
                   )),
             ),

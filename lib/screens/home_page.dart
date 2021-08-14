@@ -11,6 +11,7 @@ import 'package:instagram_ui_clone/globals/myColors.dart';
 // import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
+import 'package:instagram_ui_clone/providers/posts.dart';
 import 'package:instagram_ui_clone/screens/add_post.dart';
 // import 'package:instagram_ui_clone/screens/chat.dart';
 // import 'package:instagram_ui_clone/models/user.dart';
@@ -22,6 +23,7 @@ import 'package:instagram_ui_clone/screens/feed.dart';
 import 'package:instagram_ui_clone/widgets/bnb.dart';
 import 'package:instagram_ui_clone/widgets/dm_button.dart';
 import 'package:instagram_ui_clone/widgets/instagram_logo.dart';
+import 'package:provider/provider.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import '../functions/upload_image.dart' as imageUpload;
 
@@ -33,6 +35,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isLoading = true;
+  @override
+  void initState() {
+    Provider.of<Posts>(context, listen: false).fetchFollowingData().then((_) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -59,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           MySpaces.hGapInBetween,
         ],
       ),
-      body: Feed(),
+      body: isLoading ? Center(child: CircularProgressIndicator()) : Feed(),
       bottomNavigationBar: Bnb(),
     );
   }

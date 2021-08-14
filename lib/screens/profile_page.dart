@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
               .snapshots(),
           _db.collection('users').doc(currentUser).snapshots()),
       builder: (context, snapshots) {
-        if (snapshots.item1.connectionState == ConnectionState.waiting &&
+        if (snapshots.item1.connectionState == ConnectionState.waiting ||
             snapshots.item2.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(),
