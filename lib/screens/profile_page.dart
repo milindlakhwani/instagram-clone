@@ -8,11 +8,13 @@ import 'package:instagram_ui_clone/globals/myFonts.dart';
 import 'package:instagram_ui_clone/globals/mySpaces.dart';
 import 'package:instagram_ui_clone/globals/sizeConfig.dart';
 import 'package:instagram_ui_clone/screens/add_post.dart';
+import 'package:instagram_ui_clone/screens/edit_profile_screen.dart';
 import 'package:instagram_ui_clone/screens/signup.dart';
 import 'package:instagram_ui_clone/widgets/bnb.dart';
 // import 'package:instagram_ui_clone/widgets/button.dart';
 import 'package:instagram_ui_clone/widgets/follow_button.dart';
 import 'package:instagram_ui_clone/widgets/profile_picture.dart';
+import 'package:instagram_ui_clone/widgets/user_button.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -115,55 +117,24 @@ class ProfilePage extends StatelessWidget {
                           style: MyFonts.light.size(15),
                         ),
                         Text(
-                          'Bio hi padhna tha to science le lete',
+                          snapshots.item2.data['bio'],
                           style: MyFonts.light.size(15),
                         ),
                         MySpaces.vGapInBetween,
                         (currentUser == _auth.currentUser.uid)
-                            ? Container(
-                                width: double.infinity,
-                                child: TextButton(
-                                  onPressed: () {
+                            ? Column(
+                                children: [
+                                  UserButton(() {
                                     _auth.signOut();
                                     Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
                                             SignUp.routeName, (route) => false);
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.logout_outlined,
-                                        color: kWhite,
-                                      ),
-                                      MySpaces.hGapInBetween,
-                                      Text(
-                                        "Log Out",
-                                        style: MyFonts.light
-                                            .setColor(kWhite)
-                                            .size(17),
-                                      ),
-                                    ],
-                                  ),
-                                  // child: Text(
-                                  //   "Logout",
-                                  //   style:
-                                  //       MyFonts.light.setColor(kWhite).size(17),
-                                  // ),
-                                  style: TextButton.styleFrom(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 7),
-                                    backgroundColor: kBlack,
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          color: kWhite.withOpacity(0.5),
-                                          width: 0.5),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                  }, "Log Out", Icons.logout_outlined),
+                                  UserButton(() {
+                                    Navigator.of(context)
+                                        .pushNamed(EditProfile.routeName);
+                                  }, "Edit Profile", Icons.edit),
+                                ],
                               )
                             : (snapshots.item2.data['followers'] as List)
                                     .contains(_auth.currentUser.uid)

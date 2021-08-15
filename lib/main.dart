@@ -4,6 +4,7 @@ import 'package:instagram_ui_clone/providers/authentication.dart';
 import 'package:instagram_ui_clone/providers/posts.dart';
 import 'package:instagram_ui_clone/screens/activity.dart';
 import 'package:instagram_ui_clone/screens/chat.dart';
+import 'package:instagram_ui_clone/screens/edit_profile_screen.dart';
 import 'package:instagram_ui_clone/screens/home_page.dart';
 import 'package:instagram_ui_clone/screens/profile_page.dart';
 import 'package:instagram_ui_clone/screens/search.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
           Activity.routeName: (ctx) => Activity(),
           ProfilePage.routeName: (ctx) => ProfilePage(),
           Chat.routeName: (ctx) => Chat(),
+          EditProfile.routeName: (ctx) => EditProfile(),
         },
       ),
     );

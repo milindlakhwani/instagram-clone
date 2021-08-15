@@ -29,6 +29,7 @@ class Authentication with ChangeNotifier {
           'following': [],
           'imageUrl': null,
           'userId': _auth.currentUser.uid,
+          'bio': '',
         });
       }
     } catch (e) {
